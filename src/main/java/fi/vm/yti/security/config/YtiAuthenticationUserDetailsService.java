@@ -1,8 +1,6 @@
 package fi.vm.yti.security.config;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -18,8 +16,11 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import fi.vm.yti.security.NewUser;
+import fi.vm.yti.security.Organization;
 import fi.vm.yti.security.Role;
 import fi.vm.yti.security.ShibbolethAuthenticationDetails;
+import fi.vm.yti.security.User;
 import fi.vm.yti.security.YtiUser;
 import fi.vm.yti.security.util.RoleUtil;
 import static fi.vm.yti.security.config.RestTemplateConfig.httpClient;
@@ -70,34 +71,4 @@ public class YtiAuthenticationUserDetailsService implements AuthenticationUserDe
 
         return new YtiUser(user.email, user.firstName, user.lastName, user.id, user.superuser, user.newlyCreated, user.tokenCreatedAt, user.tokenInvalidationAt, rolesInOrganizations, user.containerUri, user.tokenRole);
     }
-}
-
-class NewUser {
-
-    public UUID id;
-    public String email;
-    public String firstName;
-    public String lastName;
-}
-
-class User {
-
-    public String email;
-    public String firstName;
-    public String lastName;
-    public boolean superuser;
-    public boolean newlyCreated;
-    public List<Organization> organization;
-    public UUID id;
-    public LocalDateTime removalDateTime;
-    public LocalDateTime tokenCreatedAt;
-    public LocalDateTime tokenInvalidationAt;
-    public String containerUri;
-    public String tokenRole;
-}
-
-class Organization {
-
-    public UUID uuid;
-    public List<String> role;
 }
