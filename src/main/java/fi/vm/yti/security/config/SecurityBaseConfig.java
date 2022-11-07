@@ -312,7 +312,12 @@ public class SecurityBaseConfig extends KeycloakWebSecurityConfigurerAdapter {
         //     }
         // };
 
-        
+        http
+                // ...
+                .headers()
+                .frameOptions()
+                .sameOrigin();
+
         http.antMatcher("/**/*")
             // .addFilter(authenticationFilter())
             // .addFilterBefore(keycloakAuthenticationProcessingFilter(), RequestAttributeAuthenticationFilter.class)
