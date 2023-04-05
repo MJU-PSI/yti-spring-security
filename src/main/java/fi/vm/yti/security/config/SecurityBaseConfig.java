@@ -11,13 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jetbrains.annotations.Nullable;
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -44,8 +47,7 @@ import fi.vm.yti.security.YtiUser;
 import static fi.vm.yti.security.config.RestTemplateConfig.httpClient;
 import static java.util.Collections.emptyList;
 
-@Configuration
-@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
+@KeycloakConfiguration
 public class SecurityBaseConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     private final String groupmanagementUrl;
@@ -79,6 +81,12 @@ public class SecurityBaseConfig extends KeycloakWebSecurityConfigurerAdapter {
     // ShibbolethAuthenticationDetails> authenticationDetailsSource() {
     // return ShibbolethAuthenticationDetails::new;
     // }
+
+    @Bean
+    @Primary
+    public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
+    }
 
     @Bean
     UserDetailsService keycloakUserDetailsService() {
