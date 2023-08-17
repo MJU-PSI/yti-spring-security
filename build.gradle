@@ -32,7 +32,7 @@ scmVersion {
     }
 }
 
-project.version = scmVersion.version
+project.version = "1.0.0"
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
